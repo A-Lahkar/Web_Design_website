@@ -1,7 +1,7 @@
 country = ["Argentina", "Australia", "Austria", "Belgium", "Brazil", "Bulgaria", "Canada", "China", "Colombia", "Cuba", "Czech Republic", "Egypt", "France", "Germany",
- "Greece", "Hong Kong", "Hungary", "India", "Indonesia", "Ireland", "Israel", "Italy", "Japan", "Latvia", "Lithuania", "Malaysia", "Mexico", "Morocco", "Netherlands",
+  "Greece", "Hong Kong", "Hungary", "India", "Indonesia", "Ireland", "Israel", "Italy", "Japan", "Latvia", "Lithuania", "Malaysia", "Mexico", "Morocco", "Netherlands",
   "New Zealand", "Nigeria", "Norway", "Philippines", "Poland", "Portugal", "Romania", "Russia", "Saudi Arabia", "Serbia", "Singapore", "Slovakia", "Slovenia",
-   "South Africa", "South Korea", "Sweden", "Switzerland", "Taiwan", "Thailand", "Turkey", "UAE", "Ukraine", "United Kingdom", "United States", "Venuzuela"]
+  "South Africa", "South Korea", "Sweden", "Switzerland", "Taiwan", "Thailand", "Turkey", "UAE", "Ukraine", "United Kingdom", "United States", "Venuzuela"]
 
 country_codes = ["ar",
   "au", "at", "be", "br", "bg", "ca", "cn", "co", "cu", "cz", "eg", "fr", "de", "gr", "hk", "hu", "in", "id", "ie", "il", "it", "jp", "lv", "lt",
@@ -56,20 +56,14 @@ $(`.dropdown-item`).click(function () {
 })
 
 function loaddata() {
-  url = `https://newsapi.org/v2/top-headlines?country=${code}&apiKey=5e61b7561e794a1d9e169219bf23c6db`
-  console.log(url)
-
   $.ajax({
-    url: url,
-    type: 'get',
+    url: `https://newsapi.org/v2/top-headlines?country=${code}&apiKey=5e61b7561e794a1d9e169219bf23c6db`,
+    type: "get",
     success: function (res) {
       news = res.articles;
       result = res.totalResults
       sort_news_data(news)
       show_news()
-    },
-    error: function (res) {
-      console.log(res)
     }
   })
 }
@@ -83,6 +77,31 @@ function sort_news_data(data) {
     url_news.push(data[i].url)
     urlToImage.push(data[i].urlToImage)
   }
+
+  var req = new XMLHttpRequest()
+  req.open('POST', '/news-details')
+  req.setRequestHeader("Content-Type", "application/json")
+  req.send(JSON.stringify({
+    route: {
+      author: author,
+      content: content,
+      description: description,
+      title: title,
+      url_news: url_news,
+      urlToImage: urlToImage,
+    }
+  }))
+
+  req.addEventListener('load', () => {
+    console.log(req.responseText)
+    console.log("Request done")
+  })
+
+  req.addEventListener('error', (e) => {
+    console.log(e)
+  })
+
+  var x = document.getElementById("demo");
 }
 
 
@@ -90,7 +109,7 @@ function show_news() {
   for (i = 0; i < author.length; i++) {
     if (title[i] !== null) {
       $(".col").append(`
-      <div class="together${i}">
+      <div id="together" class="together${i}">
           <div id="news_block" class="card shadow-sm">
               <img id="image" src="${urlToImage[i]}" alt="Image" />
             <div class="card-body">

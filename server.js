@@ -16,31 +16,31 @@ api.get("/", (req, res) => {
   res.render("index")
 })
 
-// api.get("/api", (req, res) => {
-//   res.send(route)
-// })
+api.get("/api", (req, res) => {
+  res.send(route)
+})
 
-// api.get("/locationPage", (req, res) => {
-//   res.render("locationPage")
-// })
+api.get("/locationPage", (req, res) => {
+  res.render("locationPage")
+})
 
-// api.post("/get-location", (req, res) => {
-//   console.log(req.body)
-//   pos = req.body
-// })
+api.post("/get-location", (req, res) => {
+  console.log(req.body)
+  pos = req.body
+})
 
-// api.get("/take-location",(req,res)=>{
-//   res.send(pos)
-// })
+api.get("/take-location",(req,res)=>{
+  res.send(pos)
+})
 
 
-// api.post('/location-details', (req, res) => {
-//   console.log(req.body)
-//   route = req.body
-// })
+api.post('/news-details', (req, res) => {
+  console.log(req.body)
+  route = req.body
+})
 
-// api.get('/remove-details', (req, res)=>{
-//   route = ""
-//   pos = ""
-//   res.send("Reset Details....")
-// })
+api.get('/remove-details', (req, res)=>{
+  route = ""
+  pos = ""
+  res.send("Reset Details....")
+})
