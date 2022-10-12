@@ -77,31 +77,6 @@ function sort_news_data(data) {
     url_news.push(data[i].url)
     urlToImage.push(data[i].urlToImage)
   }
-
-  var req = new XMLHttpRequest()
-  req.open('POST', '/news-details')
-  req.setRequestHeader("Content-Type", "application/json")
-  req.send(JSON.stringify({
-    route: {
-      author: author,
-      content: content,
-      description: description,
-      title: title,
-      url_news: url_news,
-      urlToImage: urlToImage,
-    }
-  }))
-
-  req.addEventListener('load', () => {
-    console.log(req.responseText)
-    console.log("Request done")
-  })
-
-  req.addEventListener('error', (e) => {
-    console.log(e)
-  })
-
-  var x = document.getElementById("demo");
 }
 
 
